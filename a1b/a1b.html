@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="script.js" charset="utf-8"></script>
     <title>Assignment 1B</title>
     <style>
         .barChart {
@@ -47,9 +48,9 @@
         }
     </style>
 </head>
-<body>
-<body>
 
+<body>
+<script src="script.js" charset="utf-8"></script>
 <h3>CSE 457 Assignment 1B</h3>
 <span>Leanne Krivaa</span>
 <span>k.leanne@wustl.edu</span>
@@ -60,12 +61,12 @@
 <br/>
 
 <span>
-    <button>Staircase</button>
+    <button onclick="staircase()">Staircase</button>
 </span>
 
 <span>
     <label>Dataset:</label>
-    <select id="dataset">
+    <select onchange="changeData()" id="dataset">
         <option value="anscombe_I">Anscombe's Quartet I</option>
         <option selected value="anscombe_II">Anscombe's Quartet II</option>
         <option value="anscombe_III">Anscombe's Quartet III</option>
@@ -74,7 +75,7 @@
 </span>
 
 <span>
-    <input type="checkbox" id="random"> Random Subset
+    <input type="checkbox" id="random" onclick="randomSubset()"> Random Subset
 </span>
 
 <br/>
