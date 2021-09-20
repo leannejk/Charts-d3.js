@@ -48,14 +48,14 @@ function update(data) {
         .range([0, 110]);
 
     // ****** TODO: PART III (you will also edit in PART V) ******
-
+    d3.selectAll("svg > *").remove();
     // TODO: Select and update the 'a' bar chart bars
-    var firstBar = document.getElementById("firstbar");
-    removeAllChildNodes(firstBar);
+    // var firstBar = document.getElementById("firstbar");
+    // removeAllChildNodes(firstBar);
+
 
     // TODO: Select and update the 'b' bar chart bars
-    var secondBar = document.getElementById("secondbar");
-    removeAllChildNodes(secondbar);
+
 
     // TODO: Select and update the 'a' line chart path using this line generator
     var aLineGenerator = d3.line()
@@ -67,11 +67,18 @@ function update(data) {
         });
 
 
-
-    var firstLine = document.getElementById("Aline");
-    removeAllChildNodes(firstLine);
-    var svg3 = d3.select("ALine")
-    svg3.append(aLineGenerator)
+    var aData = []
+    for (var i = 0; i < data.length; i++)
+    {
+        aData.push({a: 0});
+        console.log(typeof data[i].a);
+        aData[i].a = data[i].a;
+    }
+    var linea = aLineGenerator(aData);
+    var newpath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+    newpath.setAttributeNS(null, "class", "lines");
+    newpath.setAttributeNS(null, "d", linea);
+    document.getElementById("Aline").appendChild(newpath);
 
     // TODO: Select and update the 'b' line chart path (create your own generator)
     var bLineGenerator = d3.line()
@@ -79,40 +86,67 @@ function update(data) {
             return iScale(i);
         })
         .y(function (d) {
-            return aScale(d.b);
+            return bScale(d.b);
         });
-    var secondLine = document.getElementById("Bline");
-    removeAllChildNodes(secondLine);
-    var svg2 = d3.select("BLine")
-    svg2.append(bLineGenerator)
+
+    var bData = []
+    for (i = 0; i < data.length; i++)
+    {
+        bData.push({b: 0});
+        bData[i].b = data[i].b;
+    }
+    var lineb = bLineGenerator(bData);
+    console.log(lineb)
+    var newpath2 = document.createElementNS('http://www.w3.org/2000/svg',"path");
+    newpath2.setAttributeNS(null, "class", "lines");
+    newpath2.setAttributeNS(null, "d", lineb);
+    document.getElementById("Bline").appendChild(newpath2);
 
     // TODO: Select and update the 'a' area chart path using this line generator
     var aAreaGenerator = d3.area()
         .x(function (d, i) {
             return iScale(i);
         })
-        .y0(0)
+        .y0(200)
         .y1(function (d) {
             return aScale(d.a);
         });
 
-    var firstarea = document.getElementById("Aarea");
-    removeAllChildNodes(firstarea);
-    firstLine.appendChild(aAreaGenerator);
+    var areaAData = []
+    for (i = 0; i < data.length; i++)
+    {
+        areaAData.push({a: 0});
+        areaAData[i].a = data[i].a;
+    }
+    var areaA = aAreaGenerator(areaAData);
+    console.log(areaA)
+    var newArea = document.createElementNS('http://www.w3.org/2000/svg',"path");
+    newArea.setAttributeNS(null, "class", "areas");
+    newArea.setAttributeNS(null, "d", areaA);
+    document.getElementById("Aarea").appendChild(newArea);
 
     // TODO: Select and update the 'b' area chart path (create your own generator)
     var bAreaGenerator = d3.area()
         .x(function (d, i) {
             return iScale(i);
         })
-        .y0(0)
+        .y0(200)
         .y1(function (d) {
-            return aScale(d.b);
+            return bScale(d.b);
         });
 
-    var secondarea = document.getElementById("Barea");
-    removeAllChildNodes(secondarea);
-    firstLine.appendChild(bAreaGenerator);
+    var areaBData = []
+    for (i = 0; i < data.length; i++)
+    {
+        areaBData.push({b: 0});
+        areaBData[i].b = data[i].b;
+    }
+    var areaB = bAreaGenerator(areaBData);
+    console.log(areaB)
+    var newAreaB = document.createElementNS('http://www.w3.org/2000/svg',"path");
+    newAreaB.setAttributeNS(null, "class", "areas");
+    newAreaB.setAttributeNS(null, "d", areaB);
+    document.getElementById("Barea").appendChild(newAreaB);
 
     // TODO: Select and update the scatterplot points
 
@@ -149,11 +183,5 @@ function randomSubset() {
     }
     else{
         changeData();
-    }
-}
-
-function removeAllChildNodes(parent) {
-    while (parent.firstChild) {
-        parent.removeChild(parent.firstChild);
     }
 }
