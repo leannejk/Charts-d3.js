@@ -46,15 +46,47 @@ function update(data) {
     var iScale = d3.scaleLinear()
         .domain([0, data.length])
         .range([0, 110]);
+    var iScale2 = d3.scaleLinear()
+        .domain([0, data.length])
+        .range([0, 200]);
 
-    // ****** TODO: PART III (you will also edit in PART V) ******
+    let aData = []
+    for (var i = 0; i < data.length; i++)
+    {
+        aData.push({a: 0});
+        aData[i].a = data[i].a;
+    }
+
+    var bData = []
+    for (i = 0; i < data.length; i++)
+    {
+        bData.push({b: 0});
+        bData[i].b = data[i].b;
+    }
     d3.selectAll("svg > *").remove();
-    // TODO: Select and update the 'a' bar chart bars
-    // var firstBar = document.getElementById("firstbar");
-    // removeAllChildNodes(firstBar);
 
+    // TODO: Select and update the 'a' bar chart bars
+    var deleteSvg = document.getElementById("firstbar")
+    deleteSvg.parentNode.removeChild(deleteSvg);
+
+    var svg = d3.select("#aBar").append("svg")
+        .attr("width", 200)
+        .attr("height", 200)
+        .attr("id", "firstbar")
+    console.log(svg)
+    svg.selectAll(".bar")
+        .data(data)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", 10)
+        .attr("width",function(d) { return aScale(d.a); })
+        .attr("height", 12)
+        .attr("y", function(d, i) { return iScale2(i)});
 
     // TODO: Select and update the 'b' bar chart bars
+
+
+
 
 
     // TODO: Select and update the 'a' line chart path using this line generator
@@ -66,14 +98,6 @@ function update(data) {
             return aScale(d.a);
         });
 
-
-    var aData = []
-    for (var i = 0; i < data.length; i++)
-    {
-        aData.push({a: 0});
-        console.log(typeof data[i].a);
-        aData[i].a = data[i].a;
-    }
     var linea = aLineGenerator(aData);
     var newpath = document.createElementNS('http://www.w3.org/2000/svg',"path");
     newpath.setAttributeNS(null, "class", "lines");
@@ -89,14 +113,8 @@ function update(data) {
             return bScale(d.b);
         });
 
-    var bData = []
-    for (i = 0; i < data.length; i++)
-    {
-        bData.push({b: 0});
-        bData[i].b = data[i].b;
-    }
+
     var lineb = bLineGenerator(bData);
-    console.log(lineb)
     var newpath2 = document.createElementNS('http://www.w3.org/2000/svg',"path");
     newpath2.setAttributeNS(null, "class", "lines");
     newpath2.setAttributeNS(null, "d", lineb);
@@ -112,14 +130,7 @@ function update(data) {
             return aScale(d.a);
         });
 
-    var areaAData = []
-    for (i = 0; i < data.length; i++)
-    {
-        areaAData.push({a: 0});
-        areaAData[i].a = data[i].a;
-    }
-    var areaA = aAreaGenerator(areaAData);
-    console.log(areaA)
+    var areaA = aAreaGenerator(aData);
     var newArea = document.createElementNS('http://www.w3.org/2000/svg',"path");
     newArea.setAttributeNS(null, "class", "areas");
     newArea.setAttributeNS(null, "d", areaA);
@@ -135,14 +146,7 @@ function update(data) {
             return bScale(d.b);
         });
 
-    var areaBData = []
-    for (i = 0; i < data.length; i++)
-    {
-        areaBData.push({b: 0});
-        areaBData[i].b = data[i].b;
-    }
-    var areaB = bAreaGenerator(areaBData);
-    console.log(areaB)
+    var areaB = bAreaGenerator(bData);
     var newAreaB = document.createElementNS('http://www.w3.org/2000/svg',"path");
     newAreaB.setAttributeNS(null, "class", "areas");
     newAreaB.setAttributeNS(null, "d", areaB);

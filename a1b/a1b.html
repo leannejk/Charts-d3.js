@@ -57,7 +57,7 @@
 
 <body>
 <script src="d3.js" charset="utf-8"></script>
-<script src="script.js"></script>
+
 <h3>CSE 457 Assignment 1B</h3>
 <span>Leanne Krivaa</span>
 <span>k.leanne@wustl.edu</span>
@@ -89,6 +89,7 @@
 
 <div>
     <h2>Bar Charts</h2>
+    <div id="aBar">
     <svg id="firstbar" width="200" height="200">
         <!-- Paste your Part A solution here -->
         <rect class="bar" width="100" height="15" x="0" y="150"></rect>
@@ -104,7 +105,8 @@
         <rect class="bar" width="50" height="15" x="0" y="0"></rect>
 
     </svg>
-
+    </div>
+    <div id="bBar">
     <svg id="secondbar" width="200" height="200">
         <!-- Paste your Part A solution here -->
         <rect class="bar" width="80.4" height="15" x="0" y="150"></rect>
@@ -119,6 +121,7 @@
         <rect class="bar" width="48.2" height="15" x="0" y="15"></rect>
         <rect class="bar" width="56.8" height="15" x="0" y="0"></rect>
     </svg>
+    </div>
 </div>
 
 <div>
@@ -173,5 +176,6 @@
         <path class="frame" d="M 5 0 L 200 0 L 200 200 L 5 200 L 5 0" />
     </svg>
 </div>
+<script src="script.js"></script>
 </body>
 </html>
