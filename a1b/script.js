@@ -2,7 +2,11 @@
 // These keep JSHint quiet if you're using it (highly recommended!)
 
 function staircase() {
-    // ****** TODO: PART II ******
+    var bars = document.getElementById("firstbar");
+    var children = bars.children;
+    for(var i = 0 ; i < children.length; i++){
+        children[children.length - 1 - i].style.width = String(i * 10 + 10) + "px";
+    }
 }
 
 function update(data) {
@@ -46,8 +50,12 @@ function update(data) {
     // ****** TODO: PART III (you will also edit in PART V) ******
 
     // TODO: Select and update the 'a' bar chart bars
+    var firstBar = document.getElementById("firstbar");
+    removeAllChildNodes(firstBar);
 
     // TODO: Select and update the 'b' bar chart bars
+    var secondBar = document.getElementById("secondbar");
+    removeAllChildNodes(secondbar);
 
     // TODO: Select and update the 'a' line chart path using this line generator
     var aLineGenerator = d3.line()
@@ -58,7 +66,25 @@ function update(data) {
             return aScale(d.a);
         });
 
+
+
+    var firstLine = document.getElementById("Aline");
+    removeAllChildNodes(firstLine);
+    var svg3 = d3.select("ALine")
+    svg3.append(aLineGenerator)
+
     // TODO: Select and update the 'b' line chart path (create your own generator)
+    var bLineGenerator = d3.line()
+        .x(function (d, i) {
+            return iScale(i);
+        })
+        .y(function (d) {
+            return aScale(d.b);
+        });
+    var secondLine = document.getElementById("Bline");
+    removeAllChildNodes(secondLine);
+    var svg2 = d3.select("BLine")
+    svg2.append(bLineGenerator)
 
     // TODO: Select and update the 'a' area chart path using this line generator
     var aAreaGenerator = d3.area()
@@ -70,9 +96,26 @@ function update(data) {
             return aScale(d.a);
         });
 
+    var firstarea = document.getElementById("Aarea");
+    removeAllChildNodes(firstarea);
+    firstLine.appendChild(aAreaGenerator);
+
     // TODO: Select and update the 'b' area chart path (create your own generator)
+    var bAreaGenerator = d3.area()
+        .x(function (d, i) {
+            return iScale(i);
+        })
+        .y0(0)
+        .y1(function (d) {
+            return aScale(d.b);
+        });
+
+    var secondarea = document.getElementById("Barea");
+    removeAllChildNodes(secondarea);
+    firstLine.appendChild(bAreaGenerator);
 
     // TODO: Select and update the scatterplot points
+
 
     // ****** TODO: PART IV ******
 }
@@ -106,5 +149,11 @@ function randomSubset() {
     }
     else{
         changeData();
+    }
+}
+
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
     }
 }
