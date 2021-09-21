@@ -41,6 +41,29 @@
             stroke-width: 2px;
         }
 
+        body{
+            background-color: lightgrey;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        h3{
+            font-size: 30px;
+            color: #774e00;
+            text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+        }
+
+        h2{
+            font-size: 50px;
+            color: #005e57;
+            text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+        }
+
+        h2:hover{
+            font-size: 51px;
+            color: #ffffff;
+            text-shadow: -1px -1px 0 #005e57, 1px -1px 0 #005e57, -1px 1px 0 #005e57, 1px 1px 0 #005e57;
+        }
+
         /* Styles that clean up the layout;
          * you can ignore these */
         div {
@@ -55,7 +78,7 @@
     </style>
 </head>
 
-<body>
+<body onload="changeData()">
 <script src="d3.js" charset="utf-8"></script>
 
 <h3>CSE 457 Assignment 1B</h3>
@@ -123,7 +146,7 @@
     </svg>
     </div>
 </div>
-
+<p></p>
 <div>
     <h2>Line Charts</h2>
 
@@ -138,7 +161,7 @@
     L 60 108 L 70 137.8 L 80 72 L 90 132.2 L 100 123.6" />
     </svg>
 </div>
-
+<p></p>
 <div>
     <h2>Area Charts</h2>
 
@@ -156,10 +179,11 @@
               stroke-width="2" fill="steelblue" />
     </svg>
 </div>
-
+<p></p>
 <div>
     <h2>Scatterplot</h2>
 
+    <div id="scat">
     <svg id="scatter" width="200" height="200">
         <!-- Paste your Part A solution here -->
         <circle cx="100" cy="80.4" r="5"/>
@@ -175,6 +199,7 @@
         <circle cx="50" cy="123.6" r="5"/>
         <path class="frame" d="M 5 0 L 200 0 L 200 200 L 5 200 L 5 0" />
     </svg>
+    </div>
 </div>
 <script src="script.js"></script>
 </body>

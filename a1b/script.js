@@ -1,11 +1,19 @@
 /*globals alert, document, d3, console*/
 // These keep JSHint quiet if you're using it (highly recommended!)
 
+let bars = document.getElementsByClassName("bar");
+for(var i = 0; i < bars.length; i++){
+    bars[i].setAttribute("onmousemove", hover(bars[i]));
+}
+
+function hover(bar){
+    bar.style.fill = "red";
+}
 function staircase() {
     var bars = document.getElementById("firstbar");
     var children = bars.children;
     for(var i = 0 ; i < children.length; i++){
-        children[children.length - 1 - i].style.width = String(i * 10 + 10) + "px";
+        children[i].style.width = String(i * 10 + 10) + "px";
     }
 }
 
@@ -73,7 +81,6 @@ function update(data) {
         .attr("width", 200)
         .attr("height", 200)
         .attr("id", "firstbar")
-    console.log(svg)
     svg.selectAll(".bar")
         .data(data)
         .enter().append("rect")
@@ -84,10 +91,22 @@ function update(data) {
         .attr("y", function(d, i) { return iScale2(i)});
 
     // TODO: Select and update the 'b' bar chart bars
+    var deleteSvg2 = document.getElementById("secondbar")
+    deleteSvg2.parentNode.removeChild(deleteSvg2);
 
-
-
-
+    var svg = d3.select("#bBar").append("svg")
+        .attr("width", 200)
+        .attr("height", 200)
+        .attr("id", "secondbar")
+    console.log(svg)
+    svg.selectAll(".bar")
+        .data(data)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", 10)
+        .attr("width",function(d) { return bScale(d.b); })
+        .attr("height", 12)
+        .attr("y", function(d, i) { return iScale2(i)});
 
     // TODO: Select and update the 'a' line chart path using this line generator
     var aLineGenerator = d3.line()
@@ -153,9 +172,36 @@ function update(data) {
     document.getElementById("Barea").appendChild(newAreaB);
 
     // TODO: Select and update the scatterplot points
+    var deleteSvg3 = document.getElementById("scatter")
+    deleteSvg3.parentNode.removeChild(deleteSvg3);
+    let x = 0.0;
+    let y = 0.0;
+    var svg = d3.select("#scat").append("svg")
+        .attr("width", 200)
+        .attr("height", 200)
+        .attr("id", "scatter")
+    svg.selectAll("circle")
+        .data(data)
+        .enter().append("circle")
+        .attr("r", 5)
+        .attr("cx", function (d){
+            x = aScale(d.a);
+            return x; })
+        .attr("cy", function (d){
+            y = bScale(d.b);
+            return y; })
+        .on('click', function (){console.log("X: " + x + "Y: "+ y)});
 
+    // var circles = document.getElementById("scatter").children;
+    // for(var i = 0; i< circles.length; i++){
+    //     // console.log(circles[i].getAttribute('cx'))
+    //     circles[i].addEventListener("click", event => myFunc());
+    // }
 
-    // ****** TODO: PART IV ******
+    d3.select("#scatter").append("path")
+        .attr("class", "frame")
+        .attr("d", "M 5 0 L 200 0 L 200 200 L 5 200 L 5 0")
+
 }
 
 function changeData() {
@@ -188,4 +234,10 @@ function randomSubset() {
     else{
         changeData();
     }
+}
+
+function myFunc(circle){
+    console.log("X: " +
+        String(circle.getAttribute('cx')) +
+        " Y: " + String(circle.getAttribute('cy')))
 }
