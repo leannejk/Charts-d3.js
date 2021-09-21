@@ -1,14 +1,47 @@
 /*globals alert, document, d3, console*/
 // These keep JSHint quiet if you're using it (highly recommended!)
 
-let bars = document.getElementsByClassName("bar");
-for(var i = 0; i < bars.length; i++){
-    bars[i].setAttribute("onmousemove", hover(bars[i]));
-}
 
-function hover(bar){
-    bar.style.fill = "red";
-}
+// let selection = d3.select("#firstbar");
+// var svgcon = document.getElementById("firstbar");
+// var bars = svgcon.children;
+// var temp = document.getElementById("1");
+// for(var i = 0 ; i < bars.length; i++) {
+//     var strBar = String(i);
+//     var idBar = "#" + strBar;
+//     document.getElementById(strBar)
+//         .addEventListener("mouseover", function (event) {
+//             selection
+//                 .select(idBar)
+//                 .attr("fill", "red");
+//         });
+// }
+
+
+// var svgcon = document.getElementById("firstbar");
+// var bars = svgcon.children;
+// for(var i = 0 ; i < bars.length; i++){
+//     var strBar = "#" + String(i);
+//     d3.select("#firstbar")
+//         .on("mouseover", function(){
+//             d3.select(strBar)
+//                 .style.fill("red");
+//         });
+// }
+
+// var selection = d3.select("#firstbar");
+// document.getElementById("1")
+//     .addEventListener("mouseenter", function(event){
+//         selection
+//             .select("#1")
+//             .attr("fill", "red");
+//     });
+// document.getElementById("1")
+//     .addEventListener("mouseout", function(event){
+//         selection
+//             .select("#1")
+//             .attr("fill", "green");
+//     });
 function staircase() {
     var bars = document.getElementById("firstbar");
     var children = bars.children;
@@ -88,7 +121,17 @@ function update(data) {
         .attr("x", 10)
         .attr("width",function(d) { return aScale(d.a); })
         .attr("height", 12)
-        .attr("y", function(d, i) { return iScale2(i)});
+        .attr("y", function(d, i) { return iScale2(i)})
+
+    var hoverBar = document.getElementById("firstbar").children[0];
+    hoverBar.setAttribute("id", "hoverB");
+
+    d3.select("#hoverB")
+        .on("mouseover", function(){
+            d3.select(this)
+                .attr("fill", "red");
+        });
+
 
     // TODO: Select and update the 'b' bar chart bars
     var deleteSvg2 = document.getElementById("secondbar")
@@ -98,7 +141,6 @@ function update(data) {
         .attr("width", 200)
         .attr("height", 200)
         .attr("id", "secondbar")
-    console.log(svg)
     svg.selectAll(".bar")
         .data(data)
         .enter().append("rect")
@@ -213,6 +255,24 @@ function changeData() {
     else{
         d3.csv('data/' + dataFile + '.csv').then(update);
     }
+
+
+    // var temp = document.getElementsByClassName("firstBar");
+    // console.log(temp);
+
+    // let selection = d3.select("#firstbar");
+    // var svgcon = document.getElementById("firstbar");
+    // var bars = svgcon.children;
+    // for(var i = 0 ; i < bars.length; i++) {
+    //     var strBar = String(i);
+    //     var idBar = "#" + strBar;
+    //     document.getElementById("1")
+    //         .addEventListener("mouseover", function (event) {
+    //             selection
+    //                 .select(idBar)
+    //                 .attr("fill", "red");
+    //         });
+    // }
 }
 
 function randomSubset() {
