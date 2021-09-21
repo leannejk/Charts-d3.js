@@ -122,15 +122,8 @@ function update(data) {
         .attr("width",function(d) { return aScale(d.a); })
         .attr("height", 12)
         .attr("y", function(d, i) { return iScale2(i)})
-
-    var hoverBar = document.getElementById("firstbar").children[0];
-    hoverBar.setAttribute("id", "hoverB");
-
-    d3.select("#hoverB")
-        .on("mouseover", function(){
-            d3.select(this)
-                .attr("fill", "red");
-        });
+        .attr("onmouseenter", "mouseEnter(this)")
+        .attr("onmouseout", "mouseOut(this)")
 
 
     // TODO: Select and update the 'b' bar chart bars
@@ -148,7 +141,9 @@ function update(data) {
         .attr("x", 10)
         .attr("width",function(d) { return bScale(d.b); })
         .attr("height", 12)
-        .attr("y", function(d, i) { return iScale2(i)});
+        .attr("y", function(d, i) { return iScale2(i)})
+        .attr("onmouseenter", "mouseEnter(this)")
+        .attr("onmouseout", "mouseOut(this)")
 
     // TODO: Select and update the 'a' line chart path using this line generator
     var aLineGenerator = d3.line()
@@ -216,8 +211,6 @@ function update(data) {
     // TODO: Select and update the scatterplot points
     var deleteSvg3 = document.getElementById("scatter")
     deleteSvg3.parentNode.removeChild(deleteSvg3);
-    let x = 0.0;
-    let y = 0.0;
     var svg = d3.select("#scat").append("svg")
         .attr("width", 200)
         .attr("height", 200)
@@ -227,18 +220,10 @@ function update(data) {
         .enter().append("circle")
         .attr("r", 5)
         .attr("cx", function (d){
-            x = aScale(d.a);
-            return x; })
-        .attr("cy", function (d){
-            y = bScale(d.b);
-            return y; })
-        .on('click', function (){console.log("X: " + x + "Y: "+ y)});
+            return aScale(d.a); })
+        .attr("cy", function (d){ return bScale(d.b); })
+        .attr("onclick", "CircleC(this)");
 
-    // var circles = document.getElementById("scatter").children;
-    // for(var i = 0; i< circles.length; i++){
-    //     // console.log(circles[i].getAttribute('cx'))
-    //     circles[i].addEventListener("click", event => myFunc());
-    // }
 
     d3.select("#scatter").append("path")
         .attr("class", "frame")
@@ -255,24 +240,6 @@ function changeData() {
     else{
         d3.csv('data/' + dataFile + '.csv').then(update);
     }
-
-
-    // var temp = document.getElementsByClassName("firstBar");
-    // console.log(temp);
-
-    // let selection = d3.select("#firstbar");
-    // var svgcon = document.getElementById("firstbar");
-    // var bars = svgcon.children;
-    // for(var i = 0 ; i < bars.length; i++) {
-    //     var strBar = String(i);
-    //     var idBar = "#" + strBar;
-    //     document.getElementById("1")
-    //         .addEventListener("mouseover", function (event) {
-    //             selection
-    //                 .select(idBar)
-    //                 .attr("fill", "red");
-    //         });
-    // }
 }
 
 function randomSubset() {
@@ -300,4 +267,20 @@ function myFunc(circle){
     console.log("X: " +
         String(circle.getAttribute('cx')) +
         " Y: " + String(circle.getAttribute('cy')))
+}
+
+function mouseEnter(node){
+    d3.select(node)
+        .attr("fill", "red");
+}
+
+function mouseOut(node){
+    d3.select(node)
+        .attr("fill", "steelblue");
+}
+
+function CircleC(node){
+    var x = node.getAttribute('cx');
+    var y = node.getAttribute('cy');
+    console.log("x: " + x + " y: " + y);
 }
