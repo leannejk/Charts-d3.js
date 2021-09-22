@@ -67,6 +67,8 @@ function update(data) {
     // We need to explicitly convert values
     // to numbers so that comparisons work
     // when we call d3.max()
+    var padding = 5;
+    console.log(data.length)
     data.forEach(function (d) {
         d.a = parseInt(d.a);
         d.b = parseFloat(d.b);
@@ -120,7 +122,7 @@ function update(data) {
         .attr("class", "bar")
         .attr("x", 10)
         .attr("width",function(d) { return aScale(d.a); })
-        .attr("height", 12)
+        .attr("height", 200/data.length)
         .attr("y", function(d, i) { return iScale2(i)})
         .attr("onmouseenter", "mouseEnter(this)")
         .attr("onmouseout", "mouseOut(this)")
@@ -140,7 +142,7 @@ function update(data) {
         .attr("class", "bar")
         .attr("x", 10)
         .attr("width",function(d) { return bScale(d.b); })
-        .attr("height", 12)
+        .attr("height", 200/data.length)
         .attr("y", function(d, i) { return iScale2(i)})
         .attr("onmouseenter", "mouseEnter(this)")
         .attr("onmouseout", "mouseOut(this)")
@@ -255,18 +257,13 @@ function randomSubset() {
                     subset.push(d);
                 }
             });
+            console.log(subset.length)
             update(subset);
         });
     }
     else{
         changeData();
     }
-}
-
-function myFunc(circle){
-    console.log("X: " +
-        String(circle.getAttribute('cx')) +
-        " Y: " + String(circle.getAttribute('cy')))
 }
 
 function mouseEnter(node){
